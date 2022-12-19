@@ -1,10 +1,10 @@
 global products_dict, apple_discount, bread_discount
 # initialize dictionary of products and prices
 products_dict = {
-    "Soup": 0.65,
-    "Bread": 0.80,
-    "Milk": 1.30,
-    "Apples": 1.00
+    "soup": 0.65,
+    "bread": 0.80,
+    "milk": 1.30,
+    "apples": 1.00
 }
 apple_discount = 0.1
 bread_discount = 0.5
@@ -12,15 +12,15 @@ bread_discount = 0.5
 
 # preprocess data and get counts for each product
 def get_products_count(input_str):
-    products = input_str.strip().split(' ')
-    products_name = [x for x in products_dict]
-    products_count = [products.count(x) for x in products_dict]
+    products = input_str.strip().lower().split(' ')
+    products_name = [x.lower() for x in products_dict]
+    products_count = [products.count(x.lower()) for x in products_dict]
     products_count = dict(zip(products_name, products_count))
     return products_count
 
 
 # calculate discount for special products
-def calculate_discount(products_count, product1='Apples', product2='Bread', *args):
+def calculate_discount(products_count, product1='apples', product2='bread', *args):
     calc_product1_discount, calc_product2_discount = 0, 0
     # discount for apples
     if products_count[product1] >= 1:
@@ -31,7 +31,7 @@ def calculate_discount(products_count, product1='Apples', product2='Bread', *arg
     # discount for bread
     if products_count[product2] >= 1:
         product2_counter = products_count[product2]
-        product2_discounts_number = products_count['Soup'] // 2
+        product2_discounts_number = products_count['soup'] // 2
         calc_product2_discount = bread_discount * products_dict[product2] * \
                                  (product2_discounts_number if product2_discounts_number < product2_counter else
                                   product2_counter) if product2_counter >= 1 else 0
